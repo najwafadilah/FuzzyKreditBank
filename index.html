@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Persetujuan Kredit Bank</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Sistem Persetujuan Kredit Bank</h1>
+
+        <label>Penghasilan (juta)</label>
+        <input type="number" id="penghasilan" placeholder="Masukkan penghasilan (0-15)">
+
+        <label>Lama Bekerja (tahun)</label>
+        <input type="number" id="lamaKerja" placeholder="Masukkan lama kerja (0-15)">
+
+        <label>Riwayat Kredit (0-100)</label>
+        <input type="number" id="riwayat" placeholder="Masukkan nilai riwayat kredit">
+
+        <label>Rasio Hutang (%)</label>
+        <input type="number" id="hutang" placeholder="Masukkan rasio hutang (0-100)">
+
+        <button onclick="prosesFuzzy()">PROSES</button>
+
+        <div id="hasil"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

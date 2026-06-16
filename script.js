@@ -1,157 +1,159 @@
 function prosesFuzzy() {
 
-    // =========================
-    // INPUT
-    // =========================
+    // ─────────────────────────
+    // 1. INPUT
+    // ─────────────────────────
 
-    let penghasilan = parseFloat(document.getElementById("penghasilan").value);
-    let lamaKerja   = parseFloat(document.getElementById("lamaKerja").value);
-    let riwayat     = parseFloat(document.getElementById("riwayat").value);
-    let hutang      = parseFloat(document.getElementById("hutang").value);
+    const penghasilan = parseFloat(document.getElementById("penghasilan").value);
+    const lamaKerja   = parseFloat(document.getElementById("lamaKerja").value);
+    const riwayat     = parseFloat(document.getElementById("riwayat").value);
+    const hutang      = parseFloat(document.getElementById("hutang").value);
 
-    if (isNaN(penghasilan) || isNaN(lamaKerja) || isNaN(riwayat) || isNaN(hutang)) {
-        alert("Harap isi semua input terlebih dahulu.");
+    if ([penghasilan, lamaKerja, riwayat, hutang].some(isNaN)) {
+        alert("Harap isi semua input terlebih dahulu!");
         return;
     }
 
-    // =========================
-    // FUZZIFIKASI PENGHASILAN
-    // =========================
 
+    // ─────────────────────────
+    // 2. FUZZIFIKASI
+    // ─────────────────────────
+
+    // -- Penghasilan (0-15 juta) --
     let penghasilanRendah = 0, penghasilanSedang = 0, penghasilanTinggi = 0;
 
-    if (penghasilan <= 5) penghasilanRendah = 1;
-    else if (penghasilan > 5 && penghasilan <= 7)
-        penghasilanRendah = (7 - penghasilan) / (7 - 5);
+    if      (penghasilan <= 5)                      penghasilanRendah = 1;
+    else if (penghasilan > 5  && penghasilan <= 7)  penghasilanRendah = (7  - penghasilan) / 2;
 
-    if (penghasilan > 5 && penghasilan <= 8)
-        penghasilanSedang = (penghasilan - 5) / (8 - 5);
-    else if (penghasilan > 8 && penghasilan <= 11)
-        penghasilanSedang = (11 - penghasilan) / (11 - 8);
+    if      (penghasilan > 5  && penghasilan <= 8)  penghasilanSedang = (penghasilan - 5)  / 3;
+    else if (penghasilan > 8  && penghasilan <= 11) penghasilanSedang = (11 - penghasilan) / 3;
 
-    if (penghasilan > 9 && penghasilan <= 11)
-        penghasilanTinggi = (penghasilan - 9) / (11 - 9);
-    else if (penghasilan >= 11) penghasilanTinggi = 1;
+    if      (penghasilan > 9  && penghasilan <= 11) penghasilanTinggi = (penghasilan - 9)  / 2;
+    else if (penghasilan >= 11)                     penghasilanTinggi = 1;
 
-    // =========================
-    // FUZZIFIKASI LAMA KERJA
-    // =========================
-
+    // -- Lama Bekerja (0-15 tahun) --
     let kerjaBaru = 0, kerjaCukup = 0, kerjaLama = 0;
 
-    if (lamaKerja <= 3) kerjaBaru = 1;
-    else if (lamaKerja > 3 && lamaKerja <= 5)
-        kerjaBaru = (5 - lamaKerja) / (5 - 3);
+    if      (lamaKerja <= 3)                        kerjaBaru  = 1;
+    else if (lamaKerja > 3  && lamaKerja <= 5)      kerjaBaru  = (5  - lamaKerja) / 2;
 
-    if (lamaKerja > 3 && lamaKerja <= 6)
-        kerjaCukup = (lamaKerja - 3) / (6 - 3);
-    else if (lamaKerja > 6 && lamaKerja <= 9)
-        kerjaCukup = (9 - lamaKerja) / (9 - 6);
+    if      (lamaKerja > 3  && lamaKerja <= 6)      kerjaCukup = (lamaKerja - 3)  / 3;
+    else if (lamaKerja > 6  && lamaKerja <= 9)      kerjaCukup = (9  - lamaKerja) / 3;
 
-    if (lamaKerja > 7 && lamaKerja <= 9)
-        kerjaLama = (lamaKerja - 7) / (9 - 7);
-    else if (lamaKerja >= 9) kerjaLama = 1;
+    if      (lamaKerja > 7  && lamaKerja <= 9)      kerjaLama  = (lamaKerja - 7)  / 2;
+    else if (lamaKerja >= 9)                        kerjaLama  = 1;
 
-    // =========================
-    // FUZZIFIKASI RIWAYAT KREDIT
-    // =========================
-
+    // -- Riwayat Kredit (0-100) --
     let kreditBuruk = 0, kreditSedang = 0, kreditBaik = 0;
 
-    if (riwayat <= 50) kreditBuruk = 1;
-    else if (riwayat > 50 && riwayat <= 60)
-        kreditBuruk = (60 - riwayat) / (60 - 50);
+    if      (riwayat <= 50)                         kreditBuruk  = 1;
+    else if (riwayat > 50  && riwayat <= 60)        kreditBuruk  = (60 - riwayat) / 10;
 
-    if (riwayat > 50 && riwayat <= 65)
-        kreditSedang = (riwayat - 50) / (65 - 50);
-    else if (riwayat > 65 && riwayat <= 80)
-        kreditSedang = (80 - riwayat) / (80 - 65);
+    if      (riwayat > 50  && riwayat <= 65)        kreditSedang = (riwayat - 50) / 15;
+    else if (riwayat > 65  && riwayat <= 80)        kreditSedang = (80 - riwayat) / 15;
 
-    if (riwayat > 70 && riwayat <= 80)
-        kreditBaik = (riwayat - 70) / (80 - 70);
-    else if (riwayat >= 80) kreditBaik = 1;
+    if      (riwayat > 70  && riwayat <= 80)        kreditBaik   = (riwayat - 70) / 10;
+    else if (riwayat >= 80)                         kreditBaik   = 1;
 
-    // =========================
-    // FUZZIFIKASI RASIO HUTANG
-    // =========================
-
+    // -- Rasio Hutang (0-100%) --
     let hutangRendah = 0, hutangSedang = 0, hutangTinggi = 0;
 
-    if (hutang <= 30) hutangRendah = 1;
-    else if (hutang > 30 && hutang <= 40)
-        hutangRendah = (40 - hutang) / (40 - 30);
+    if      (hutang <= 30)                          hutangRendah = 1;
+    else if (hutang > 30   && hutang <= 40)         hutangRendah = (40 - hutang)  / 10;
 
-    if (hutang > 30 && hutang <= 50)
-        hutangSedang = (hutang - 30) / (50 - 30);
-    else if (hutang > 50 && hutang <= 70)
-        hutangSedang = (70 - hutang) / (70 - 50);
+    if      (hutang > 30   && hutang <= 50)         hutangSedang = (hutang - 30)  / 20;
+    else if (hutang > 50   && hutang <= 70)         hutangSedang = (70 - hutang)  / 20;
 
-    if (hutang > 60 && hutang <= 70)
-        hutangTinggi = (hutang - 60) / (70 - 60);
-    else if (hutang >= 70) hutangTinggi = 1;
+    if      (hutang > 60   && hutang <= 70)         hutangTinggi = (hutang - 60)  / 10;
+    else if (hutang >= 70)                          hutangTinggi = 1;
 
-    // =========================
-    // INFERENSI MAMDANI - 81 RULE
-    // Index: 0=Rendah/Baru/Buruk, 1=Sedang/Cukup/Sedang, 2=Tinggi/Lama/Baik
-    // Hutang: 0=Rendah(bagus), 1=Sedang, 2=Tinggi(buruk)
-    // Output: 0=Ditolak, 1=Dipertimbangkan, 2=Disetujui
-    // =========================
 
-    const muPenghasilan = [penghasilanRendah, penghasilanSedang, penghasilanTinggi];
-    const muLamaKerja   = [kerjaBaru,         kerjaCukup,        kerjaLama];
-    const muRiwayat     = [kreditBuruk,        kreditSedang,      kreditBaik];
-    const muHutang      = [hutangRendah,        hutangSedang,      hutangTinggi];
+    // ─────────────────────────
+    // 3. RULE BASE — 81 RULE
+    // ─────────────────────────
+    //
+    // Key  : "iP,iL,iR,iH"
+    //   iP : 0=Rendah  1=Sedang  2=Tinggi   (Penghasilan)
+    //   iL : 0=Baru    1=Cukup   2=Lama     (Lama Kerja)
+    //   iR : 0=Buruk   1=Sedang  2=Baik     (Riwayat Kredit)
+    //   iH : 0=Rendah  1=Sedang  2=Tinggi   (Rasio Hutang)
+    //
+    // Value: 0=Ditolak  1=Dipertimbangkan  2=Disetujui
+    //
+    // Logika bisnis:
+    //   Penghasilan Rendah  → cenderung Ditolak kecuali faktor lain sangat mendukung
+    //   Penghasilan Sedang  → bervariasi sesuai kombinasi faktor lain
+    //   Penghasilan Tinggi  → cenderung Disetujui, tapi tetap mempertimbangkan hutang & riwayat
+    // ─────────────────────────
 
-    const namaOutput      = ['Ditolak', 'Dipertimbangkan', 'Disetujui'];
-    const namaPenghasilan = ['Rendah', 'Sedang', 'Tinggi'];
-    const namaLamaKerja   = ['Baru', 'Cukup', 'Lama'];
-    const namaRiwayat     = ['Buruk', 'Sedang', 'Baik'];
-    const namaHutang      = ['Rendah', 'Sedang', 'Tinggi'];
-
-    // 81 Rule Base [iP][iL][iR][iH] → output (0/1/2)
     const ruleTable = {
-        // --- PENGHASILAN RENDAH ---
-        "0,0,0,0": 0, "0,0,0,1": 0, "0,0,0,2": 0,
-        "0,0,1,0": 0, "0,0,1,1": 0, "0,0,1,2": 0,
-        "0,0,2,0": 0, "0,0,2,1": 0, "0,0,2,2": 0,
-        "0,1,0,0": 0, "0,1,0,1": 0, "0,1,0,2": 0,
-        "0,1,1,0": 0, "0,1,1,1": 0, "0,1,1,2": 0,
-        "0,1,2,0": 1, "0,1,2,1": 0, "0,1,2,2": 0,
-        "0,2,0,0": 0, "0,2,0,1": 0, "0,2,0,2": 0,
-        "0,2,1,0": 1, "0,2,1,1": 0, "0,2,1,2": 0,
-        "0,2,2,0": 1, "0,2,2,1": 0, "0,2,2,2": 0,
 
-        // --- PENGHASILAN SEDANG ---
-        "1,0,0,0": 0, "1,0,0,1": 0, "1,0,0,2": 0,
-        "1,0,1,0": 1, "1,0,1,1": 1, "1,0,1,2": 0,
-        "1,0,2,0": 2, "1,0,2,1": 1, "1,0,2,2": 1,
-        "1,1,0,0": 0, "1,1,0,1": 1, "1,1,0,2": 0,
-        "1,1,1,0": 1, "1,1,1,1": 1, "1,1,1,2": 0,
-        "1,1,2,0": 2, "1,1,2,1": 1, "1,1,2,2": 1,
-        "1,2,0,0": 1, "1,2,0,1": 1, "1,2,0,2": 0,
-        "1,2,1,0": 2, "1,2,1,1": 1, "1,2,1,2": 1,
-        "1,2,2,0": 2, "1,2,2,1": 2, "1,2,2,2": 1,
+        // ══ PENGHASILAN RENDAH ══════════════════════════════════
+        //         iH→  Rendah  Sedang  Tinggi
+        "0,0,0,0": 0, "0,0,0,1": 0, "0,0,0,2": 0,  // Baru,   Buruk
+        "0,0,1,0": 0, "0,0,1,1": 0, "0,0,1,2": 0,  // Baru,   Sedang
+        "0,0,2,0": 0, "0,0,2,1": 0, "0,0,2,2": 0,  // Baru,   Baik
 
-        // --- PENGHASILAN TINGGI ---
-        "2,0,0,0": 2, "2,0,0,1": 2, "2,0,0,2": 0,
-        "2,0,1,0": 2, "2,0,1,1": 2, "2,0,1,2": 1,
-        "2,0,2,0": 2, "2,0,2,1": 2, "2,0,2,2": 2,
-        "2,1,0,0": 2, "2,1,0,1": 2, "2,1,0,2": 0,
-        "2,1,1,0": 2, "2,1,1,1": 2, "2,1,1,2": 1,
-        "2,1,2,0": 2, "2,1,2,1": 2, "2,1,2,2": 2,
-        "2,2,0,0": 2, "2,2,0,1": 2, "2,2,0,2": 2,
-        "2,2,1,0": 2, "2,2,1,1": 2, "2,2,1,2": 2,
-        "2,2,2,0": 2, "2,2,2,1": 2, "2,2,2,2": 2,
+        "0,1,0,0": 0, "0,1,0,1": 0, "0,1,0,2": 0,  // Cukup,  Buruk
+        "0,1,1,0": 0, "0,1,1,1": 0, "0,1,1,2": 0,  // Cukup,  Sedang
+        "0,1,2,0": 1, "0,1,2,1": 0, "0,1,2,2": 0,  // Cukup,  Baik
+
+        "0,2,0,0": 0, "0,2,0,1": 0, "0,2,0,2": 0,  // Lama,   Buruk
+        "0,2,1,0": 1, "0,2,1,1": 0, "0,2,1,2": 0,  // Lama,   Sedang
+        "0,2,2,0": 1, "0,2,2,1": 1, "0,2,2,2": 0,  // Lama,   Baik
+
+        // ══ PENGHASILAN SEDANG ══════════════════════════════════
+        "1,0,0,0": 0, "1,0,0,1": 0, "1,0,0,2": 0,  // Baru,   Buruk
+        "1,0,1,0": 1, "1,0,1,1": 0, "1,0,1,2": 0,  // Baru,   Sedang
+        "1,0,2,0": 1, "1,0,2,1": 1, "1,0,2,2": 0,  // Baru,   Baik
+
+        "1,1,0,0": 0, "1,1,0,1": 0, "1,1,0,2": 0,  // Cukup,  Buruk
+        "1,1,1,0": 1, "1,1,1,1": 1, "1,1,1,2": 0,  // Cukup,  Sedang
+        "1,1,2,0": 2, "1,1,2,1": 1, "1,1,2,2": 0,  // Cukup,  Baik
+
+        "1,2,0,0": 0, "1,2,0,1": 0, "1,2,0,2": 0,  // Lama,   Buruk
+        "1,2,1,0": 1, "1,2,1,1": 1, "1,2,1,2": 0,  // Lama,   Sedang
+        "1,2,2,0": 2, "1,2,2,1": 1, "1,2,2,2": 1,  // Lama,   Baik
+
+        // ══ PENGHASILAN TINGGI ══════════════════════════════════
+        "2,0,0,0": 1, "2,0,0,1": 0, "2,0,0,2": 0,  // Baru,   Buruk
+        "2,0,1,0": 1, "2,0,1,1": 1, "2,0,1,2": 0,  // Baru,   Sedang
+        "2,0,2,0": 2, "2,0,2,1": 1, "2,0,2,2": 1,  // Baru,   Baik
+
+        "2,1,0,0": 1, "2,1,0,1": 1, "2,1,0,2": 0,  // Cukup,  Buruk
+        "2,1,1,0": 2, "2,1,1,1": 1, "2,1,1,2": 1,  // Cukup,  Sedang
+        "2,1,2,0": 2, "2,1,2,1": 2, "2,1,2,2": 1,  // Cukup,  Baik
+
+        "2,2,0,0": 1, "2,2,0,1": 1, "2,2,0,2": 0,  // Lama,   Buruk
+        "2,2,1,0": 2, "2,2,1,1": 2, "2,2,1,2": 1,  // Lama,   Sedang
+        "2,2,2,0": 2, "2,2,2,1": 2, "2,2,2,2": 2,  // Lama,   Baik
     };
 
+    const namaPenghasilan = ["Rendah", "Sedang", "Tinggi"];
+    const namaLamaKerja   = ["Baru",   "Cukup",  "Lama"  ];
+    const namaRiwayat     = ["Buruk",  "Sedang", "Baik"  ];
+    const namaHutang      = ["Rendah", "Sedang", "Tinggi"];
+    const namaOutput      = ["Ditolak","Dipertimbangkan","Disetujui"];
+
+    const muPenghasilan = [penghasilanRendah, penghasilanSedang, penghasilanTinggi];
+    const muLamaKerja   = [kerjaBaru,         kerjaCukup,        kerjaLama        ];
+    const muRiwayat     = [kreditBuruk,        kreditSedang,      kreditBaik       ];
+    const muHutang      = [hutangRendah,        hutangSedang,      hutangTinggi     ];
+
+
+    // ─────────────────────────
+    // 4. INFERENSI MAMDANI
+    // ─────────────────────────
+
     let alphaDitolak = 0, alphaDipertimbangkan = 0, alphaDisetujui = 0;
-    let ruleDetail = [];
-    let ruleNo = 1;
+    const ruleAktif  = [];
+    let   ruleNo     = 1;
 
     for (let iP = 0; iP < 3; iP++) {
         for (let iL = 0; iL < 3; iL++) {
             for (let iR = 0; iR < 3; iR++) {
                 for (let iH = 0; iH < 3; iH++) {
+
                     const key    = `${iP},${iL},${iR},${iH}`;
                     const output = ruleTable[key];
                     const alpha  = Math.min(
@@ -161,53 +163,63 @@ function prosesFuzzy() {
                         muHutang[iH]
                     );
 
-                    if (output === 0) alphaDitolak         = Math.max(alphaDitolak,         alpha);
-                    if (output === 1) alphaDipertimbangkan = Math.max(alphaDipertimbangkan, alpha);
-                    if (output === 2) alphaDisetujui       = Math.max(alphaDisetujui,       alpha);
+                    // Komposisi MAX per kategori output
+                    if      (output === 0) alphaDitolak         = Math.max(alphaDitolak,         alpha);
+                    else if (output === 1) alphaDipertimbangkan = Math.max(alphaDipertimbangkan, alpha);
+                    else if (output === 2) alphaDisetujui       = Math.max(alphaDisetujui,       alpha);
 
-                    ruleDetail.push({
-                        no: ruleNo++,
-                        penghasilan: namaPenghasilan[iP],
-                        lamaKerja:   namaLamaKerja[iL],
-                        riwayat:     namaRiwayat[iR],
-                        hutang:      namaHutang[iH],
-                        output:      namaOutput[output],
-                        alpha:       alpha
-                    });
+                    // Simpan rule yang aktif (alpha > 0)
+                    if (alpha > 0) {
+                        ruleAktif.push({
+                            no         : ruleNo,
+                            penghasilan: namaPenghasilan[iP],
+                            lamaKerja  : namaLamaKerja[iL],
+                            riwayat    : namaRiwayat[iR],
+                            hutang     : namaHutang[iH],
+                            output     : namaOutput[output],
+                            alpha      : alpha
+                        });
+                    }
+
+                    ruleNo++;
                 }
             }
         }
     }
 
-    // =========================
-    // KOMPOSISI MAX
-    // =========================
+    // Hasil komposisi MAX
+    const ditolak         = alphaDitolak;
+    const dipertimbangkan = alphaDipertimbangkan;
+    const disetujui       = alphaDisetujui;
 
-    let ditolak         = alphaDitolak;
-    let dipertimbangkan = alphaDipertimbangkan;
-    let disetujui       = alphaDisetujui;
 
-    // =========================
-    // DEFUZZIFIKASI (Centroid)
-    // =========================
+    // ─────────────────────────
+    // 5. DEFUZZIFIKASI (Centroid, step 0.1)
+    // ─────────────────────────
+    //
+    // Fungsi keanggotaan OUTPUT:
+    //   Ditolak         : datar 1 (z<=40), turun linear (40<z<=50)
+    //   Dipertimbangkan : naik  (40<z<=60), turun (60<z<=80)
+    //   Disetujui       : naik  (70<z<=80), datar 1 (z>=80)
+    // ─────────────────────────
 
     let pembilang = 0, penyebut = 0;
 
     for (let z = 0; z <= 100; z += 0.1) {
 
         let muDitolak = 0;
-        if (z <= 40) muDitolak = 1;
-        else if (z > 40 && z <= 50) muDitolak = (50 - z) / (50 - 40);
+        if      (z <= 40)            muDitolak = 1;
+        else if (z > 40 && z <= 50)  muDitolak = (50 - z) / 10;
 
         let muDipertimbangkan = 0;
-        if (z > 40 && z <= 60)  muDipertimbangkan = (z - 40) / (60 - 40);
-        else if (z > 60 && z <= 80) muDipertimbangkan = (80 - z) / (80 - 60);
+        if      (z > 40 && z <= 60)  muDipertimbangkan = (z  - 40) / 20;
+        else if (z > 60 && z <= 80)  muDipertimbangkan = (80 - z)  / 20;
 
         let muDisetujui = 0;
-        if (z > 70 && z <= 80) muDisetujui = (z - 70) / (80 - 70);
-        else if (z >= 80)      muDisetujui = 1;
+        if      (z > 70 && z <= 80)  muDisetujui = (z  - 70) / 10;
+        else if (z >= 80)            muDisetujui = 1;
 
-        let alpha = Math.max(
+        const alpha = Math.max(
             Math.min(ditolak,         muDitolak),
             Math.min(dipertimbangkan, muDipertimbangkan),
             Math.min(disetujui,       muDisetujui)
@@ -217,115 +229,99 @@ function prosesFuzzy() {
         penyebut  += alpha;
     }
 
-    let hasilCrisp = pembilang / penyebut;
+    const hasilCrisp = pembilang / penyebut;
 
-    // =========================
-    // KEPUTUSAN
-    // =========================
 
-    let keputusan, warnaKeputusan;
+    // ─────────────────────────
+    // 6. KEPUTUSAN
+    // ─────────────────────────
+
+    let labelKeputusan, kelasKeputusan;
+
     if (hasilCrisp >= 70) {
-        keputusan      = "KREDIT DISETUJUI";
-        warnaKeputusan = "disetujui";
+        labelKeputusan = "✅ KREDIT DISETUJUI";
+        kelasKeputusan = "disetujui";
     } else if (hasilCrisp >= 50) {
-        keputusan      = "KREDIT DIPERTIMBANGKAN";
-        warnaKeputusan = "dipertimbangkan";
+        labelKeputusan = "⚖️ KREDIT DIPERTIMBANGKAN";
+        kelasKeputusan = "dipertimbangkan";
     } else {
-        keputusan      = "KREDIT DITOLAK";
-        warnaKeputusan = "ditolak";
+        labelKeputusan = "❌ KREDIT DITOLAK";
+        kelasKeputusan = "ditolak";
     }
 
-    const ruleAktif = ruleDetail.filter(r => r.alpha > 0);
 
-    const badgeClass = (out) => {
-        if (out === 'Disetujui')       return 'badge-disetujui';
-        if (out === 'Dipertimbangkan') return 'badge-dipertimbangkan';
-        return 'badge-ditolak';
-    };
+    // ─────────────────────────
+    // 7. TAMPILKAN HASIL
+    // ─────────────────────────
 
-    // =========================
-    // OUTPUT
-    // =========================
+    const f4 = v => v.toFixed(4);
+    const f2 = v => v.toFixed(2);
 
-    document.getElementById("hasil").innerHTML = `
+    // -- Hasil akhir --
+    const elKeputusan = document.getElementById("el-keputusan");
+    elKeputusan.textContent = labelKeputusan;
+    elKeputusan.className   = "status-keputusan " + kelasKeputusan;
+    document.getElementById("el-crisp").textContent = f2(hasilCrisp);
 
-    <div class="card hasil-akhir">
-        <div class="status-keputusan ${warnaKeputusan}">${keputusan}</div>
-        <h3>Hasil Akhir</h3>
-        <p>Nilai Crisp : <strong>${hasilCrisp.toFixed(2)}</strong></p>
-    </div>
+    // -- Fuzzifikasi --
+    document.getElementById("fp-rendah").textContent = f4(penghasilanRendah);
+    document.getElementById("fp-sedang").textContent = f4(penghasilanSedang);
+    document.getElementById("fp-tinggi").textContent = f4(penghasilanTinggi);
+    document.getElementById("fk-baru").textContent   = f4(kerjaBaru);
+    document.getElementById("fk-cukup").textContent  = f4(kerjaCukup);
+    document.getElementById("fk-lama").textContent   = f4(kerjaLama);
+    document.getElementById("fr-buruk").textContent  = f4(kreditBuruk);
+    document.getElementById("fr-sedang").textContent = f4(kreditSedang);
+    document.getElementById("fr-baik").textContent   = f4(kreditBaik);
+    document.getElementById("fh-rendah").textContent = f4(hutangRendah);
+    document.getElementById("fh-sedang").textContent = f4(hutangSedang);
+    document.getElementById("fh-tinggi").textContent = f4(hutangTinggi);
 
-    <div class="card">
-        <h3>Fuzzifikasi Penghasilan</h3>
-        <p>Rendah : ${penghasilanRendah.toFixed(4)}</p>
-        <p>Sedang : ${penghasilanSedang.toFixed(4)}</p>
-        <p>Tinggi : ${penghasilanTinggi.toFixed(4)}</p>
-    </div>
+    // -- Komposisi MAX --
+    document.getElementById("komp-tolak").textContent      = f4(ditolak);
+    document.getElementById("komp-pertimbang").textContent = f4(dipertimbangkan);
+    document.getElementById("komp-setuju").textContent     = f4(disetujui);
 
-    <div class="card">
-        <h3>Fuzzifikasi Lama Bekerja</h3>
-        <p>Baru  : ${kerjaBaru.toFixed(4)}</p>
-        <p>Cukup : ${kerjaCukup.toFixed(4)}</p>
-        <p>Lama  : ${kerjaLama.toFixed(4)}</p>
-    </div>
+    // -- Defuzzifikasi --
+    document.getElementById("d-pembilang").textContent = f2(pembilang);
+    document.getElementById("d-penyebut").textContent  = f4(penyebut);
+    document.getElementById("d-crisp").textContent     = f2(hasilCrisp);
 
-    <div class="card">
-        <h3>Fuzzifikasi Riwayat Kredit</h3>
-        <p>Buruk  : ${kreditBuruk.toFixed(4)}</p>
-        <p>Sedang : ${kreditSedang.toFixed(4)}</p>
-        <p>Baik   : ${kreditBaik.toFixed(4)}</p>
-    </div>
+    // -- Tabel rule aktif --
+    const badgeClass = out =>
+        out === "Disetujui"       ? "badge badge-disetujui"       :
+        out === "Dipertimbangkan" ? "badge badge-dipertimbangkan" :
+                                    "badge badge-ditolak";
 
-    <div class="card">
-        <h3>Fuzzifikasi Rasio Hutang</h3>
-        <p>Rendah : ${hutangRendah.toFixed(4)}</p>
-        <p>Sedang : ${hutangSedang.toFixed(4)}</p>
-        <p>Tinggi : ${hutangTinggi.toFixed(4)}</p>
-    </div>
+    const tbody = document.getElementById("tbody-rule");
 
-    <div class="card">
-        <h3>Komposisi MAX</h3>
-        <p>Ditolak         : ${ditolak.toFixed(4)}</p>
-        <p>Dipertimbangkan : ${dipertimbangkan.toFixed(4)}</p>
-        <p>Disetujui       : ${disetujui.toFixed(4)}</p>
-    </div>
+    if (ruleAktif.length === 0) {
+        tbody.innerHTML = `<tr>
+            <td colspan="7" style="text-align:center;color:#a0aec0;padding:20px;">
+                Tidak ada rule yang aktif untuk input ini.
+            </td>
+        </tr>`;
+    } else {
+        tbody.innerHTML = ruleAktif.map(r => `
+            <tr>
+                <td>R${r.no}</td>
+                <td>${r.penghasilan}</td>
+                <td>${r.lamaKerja}</td>
+                <td>${r.riwayat}</td>
+                <td>${r.hutang}</td>
+                <td><span class="${badgeClass(r.output)}">${r.output}</span></td>
+                <td class="alpha-val">${r.alpha.toFixed(4)}</td>
+            </tr>`).join("");
+    }
 
-    <div class="card">
-        <h3>Defuzzifikasi (Centroid)</h3>
-        <p>Pembilang   : ${pembilang.toFixed(4)}</p>
-        <p>Penyebut    : ${penyebut.toFixed(4)}</p>
-        <p>Nilai Crisp : <strong>${hasilCrisp.toFixed(4)}</strong></p>
-    </div>
+    document.getElementById("el-rule-count").textContent =
+        `— ${ruleAktif.length} aktif dari 81 rule`;
 
-    <div class="card" style="grid-column: 1 / -1;">
-        <h3>Rule Aktif dari 81 Rule Base</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Penghasilan</th>
-                    <th>Lama Bekerja</th>
-                    <th>Riwayat Kredit</th>
-                    <th>Rasio Hutang</th>
-                    <th>Output</th>
-                    <th>Alpha (α)</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${ruleAktif.map(r => `
-                <tr>
-                    <td>R${r.no}</td>
-                    <td>${r.penghasilan}</td>
-                    <td>${r.lamaKerja}</td>
-                    <td>${r.riwayat}</td>
-                    <td>${r.hutang}</td>
-                    <td><span class="${badgeClass(r.output)}">${r.output}</span></td>
-                    <td>${r.alpha.toFixed(4)}</td>
-                </tr>`).join('')}
-            </tbody>
-        </table>
-        <p class="rule-info">Menampilkan ${ruleAktif.length} rule aktif (α > 0) dari total 81 rule.</p>
-    </div>
+    document.getElementById("el-rule-info").textContent =
+        `Menampilkan ${ruleAktif.length} rule dengan α > 0 dari total 81 rule base.`;
 
-    `;
+    // -- Tampilkan section hasil & scroll --
+    const container = document.getElementById("hasil-container");
+    container.style.display = "block";
+    container.scrollIntoView({ behavior: "smooth" });
 }

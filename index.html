@@ -4,31 +4,121 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistem Persetujuan Kredit Bank</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Sistem Persetujuan Kredit Bank</h1>
 
-        <label>Penghasilan (juta)</label>
-        <input type="number" id="penghasilan" placeholder="Masukkan penghasilan (0-15)">
+<div class="container">
 
-        <label>Lama Bekerja (tahun)</label>
-        <input type="number" id="lamaKerja" placeholder="Masukkan lama kerja (0-15)">
+    <h1>Sistem Persetujuan Kredit Bank</h1>
 
-        <label>Riwayat Kredit (0-100)</label>
-        <input type="number" id="riwayat" placeholder="Masukkan nilai riwayat kredit">
+    <label>Penghasilan (juta)</label>
+    <input type="number" id="penghasilan" placeholder="Masukkan penghasilan (0-15)">
 
-        <label>Rasio Hutang (%)</label>
-        <input type="number" id="hutang" placeholder="Masukkan rasio hutang (0-100)">
+    <label>Lama Bekerja (tahun)</label>
+    <input type="number" id="lamaKerja" placeholder="Masukkan lama kerja (0-15)">
 
-        <button onclick="prosesFuzzy()">PROSES</button>
+    <label>Riwayat Kredit (0-100)</label>
+    <input type="number" id="riwayat" placeholder="Masukkan nilai riwayat kredit">
 
-        <div id="hasil"></div>
+    <label>Rasio Hutang (%)</label>
+    <input type="number" id="hutang" placeholder="Masukkan rasio hutang (0-100)">
+
+    <button onclick="prosesFuzzy()">PROSES</button>
+
+    <div id="hasil-container" style="display:none;">
+
+        <div class="card hasil-akhir">
+            <div id="el-keputusan" class="status-keputusan"></div>
+
+            <h3>Hasil Akhir</h3>
+
+            <p>
+                Nilai Crisp :
+                <strong id="el-crisp">0</strong>
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Fuzzifikasi Penghasilan</h3>
+            <p>Rendah : <span id="fp-rendah">0</span></p>
+            <p>Sedang : <span id="fp-sedang">0</span></p>
+            <p>Tinggi : <span id="fp-tinggi">0</span></p>
+        </div>
+
+        <div class="card">
+            <h3>Fuzzifikasi Lama Kerja</h3>
+            <p>Baru : <span id="fk-baru">0</span></p>
+            <p>Cukup : <span id="fk-cukup">0</span></p>
+            <p>Lama : <span id="fk-lama">0</span></p>
+        </div>
+
+        <div class="card">
+            <h3>Fuzzifikasi Riwayat Kredit</h3>
+            <p>Buruk : <span id="fr-buruk">0</span></p>
+            <p>Sedang : <span id="fr-sedang">0</span></p>
+            <p>Baik : <span id="fr-baik">0</span></p>
+        </div>
+
+        <div class="card">
+            <h3>Fuzzifikasi Rasio Hutang</h3>
+            <p>Rendah : <span id="fh-rendah">0</span></p>
+            <p>Sedang : <span id="fh-sedang">0</span></p>
+            <p>Tinggi : <span id="fh-tinggi">0</span></p>
+        </div>
+
+        <div class="card">
+            <h3>Komposisi MAX</h3>
+            <p>Ditolak : <span id="komp-tolak">0</span></p>
+            <p>Dipertimbangkan : <span id="komp-pertimbang">0</span></p>
+            <p>Disetujui : <span id="komp-setuju">0</span></p>
+        </div>
+
+        <div class="card">
+            <h3>Defuzzifikasi</h3>
+            <p>Pembilang : <span id="d-pembilang">0</span></p>
+            <p>Penyebut : <span id="d-penyebut">0</span></p>
+            <p>Nilai Crisp : <span id="d-crisp">0</span></p>
+        </div>
+
+        <div class="card" style="grid-column:1/-1;">
+
+            <h3>
+                Rule Aktif
+                <span id="el-rule-count"></span>
+            </h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Penghasilan</th>
+                        <th>Lama Kerja</th>
+                        <th>Riwayat</th>
+                        <th>Hutang</th>
+                        <th>Output</th>
+                        <th>Alpha</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tbody-rule"></tbody>
+            </table>
+
+            <p id="el-rule-info" class="rule-info"></p>
+
+        </div>
+
     </div>
-    <script src="script.js"></script>
+
+</div>
+
+<script src="script.js"></script>
+
 </body>
 </html>
